@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  background-color: #f0f0f5;
+  justify-content: center;
+  align-items: center;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  height: 80dvh;
+  width: 60dvw;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: solid gray 2px;
+}
+
+.header h1 {
+  color: #4b5463;
+}
+.header button {
+  background-color: #fdb943;
+  border-style: solid;
+  border-color: #fdb943;
+  height: 30px;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+  cursor: pointer;
+}
