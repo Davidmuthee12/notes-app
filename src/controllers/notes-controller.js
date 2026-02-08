@@ -9,7 +9,7 @@ exports.getAllNotes = async (req, res, next) => {
   try {
     const notes = await readNotes();
 
-    // Sort newest → oldest
+    // Sort newest to oldest
     const sortedNotes = [...notes].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
     );

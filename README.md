@@ -235,3 +235,13 @@ Aspiring **Backend / Full‑Stack Engineer** focused on:
 - Real‑world production patterns
 
 ---
+
+**Screenshots**
+
+# Home Page
+
+![alt text](image.png)
+
+# Create Note Modal
+
+![alt text](image-1.png)
