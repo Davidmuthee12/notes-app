@@ -1,5 +1,5 @@
-// ui.js
 import { deleteNote, createNote } from "./api.js";
+import { updateNote } from "./api.js";
 
 let notesContainer;
 let message;
@@ -9,6 +9,7 @@ let dialog, form, closeBtn;
 let confirmModal, cancelDeleteBtn, confirmDeleteBtn;
 let noteToDeleteId = null;
 let reloadAfterDelete = null;
+let editingNoteId = null;
 
 // Wait for DOM
 document.addEventListener("DOMContentLoaded", () => {
@@ -44,18 +45,30 @@ export function setupCreateHandler(refreshNotes) {
     const content = document.getElementById("content").value.trim();
 
     try {
-      await createNote({ title, content });
-      showToast("Note created successfully ");
+      if (editingNoteId) {
+        // EDIT MODE
+        await updateNote(editingNoteId, { title, content });
+        showToast("Note Editted Succesfully");
+      } else {
+        // CREATE MODE
+        await createNote({ title, content });
+        showToast("Note Created Successfully");
+      }
 
       form.reset();
+      editingNoteId = null;
       closeCreateDialog();
       refreshNotes();
     } catch (err) {
-      showToast("Failed to create note ");
+      console.error(err);
+      alert("Failed to save note");
     }
   });
 
-  closeBtn?.addEventListener("click", closeCreateDialog);
+  closeBtn?.addEventListener("click", () => {
+    editingNoteId = null;
+    closeCreateDialog();
+  });
 }
 
 function openConfirmModal(id, reloadFn) {
@@ -83,6 +96,15 @@ function showToast(message, duration = 2500) {
   }, duration);
 }
 
+function openEditDialog(note) {
+  editingNoteId = note.id;
+
+  document.getElementById("title").value = note.title;
+  document.getElementById("content").value = note.content || "";
+
+  dialog?.showModal();
+}
+
 async function handleConfirmDelete() {
   if (!noteToDeleteId) return;
 
@@ -94,7 +116,7 @@ async function handleConfirmDelete() {
     await deleteNote(noteToDeleteId);
   } catch (error) {
     console.error("Delete failed:", error);
-    await reloadAfterDelete?.(); // restore truth
+    await reloadAfterDelete?.();
   } finally {
     closeConfirmModal();
   }
@@ -153,6 +175,12 @@ export function renderNotes(notes, reloadNotes) {
     const deleteBtn = card.querySelector(".delete-btn");
     deleteBtn.addEventListener("click", () => {
       openConfirmModal(note.id, reloadNotes);
+    });
+
+    const editBtn = card.querySelector(".edit-btn");
+
+    editBtn.addEventListener("click", () => {
+      openEditDialog(note);
     });
 
     notesContainer.appendChild(card);

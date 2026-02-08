@@ -28,6 +28,20 @@ export async function createNote(note) {
   return data.data;
 }
 
+export async function updateNote(id, body) {
+  const res = await fetch(`${BASE_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update note");
+  }
+
+  return res.json();
+}
+
 export async function deleteNote(id) {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",

@@ -47,6 +47,43 @@ exports.createNote = async (req, res, next) => {
   }
 };
 
+exports.updateNote = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    const notes = await readNotes();
+
+    const index = notes.findIndex((n) => n.id === id);
+
+    if (index === -1) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    const updatedNote = {
+      ...notes[index],
+      title,
+      content,
+      updatedAt: new Date().toISOString(),
+    };
+
+    notes[index] = updatedNote;
+
+    await writeNotes(notes);
+
+    res.json({
+      status: "success",
+      data: updatedNote,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.deleteNote = async (req, res, next) => {
   try {
     const { id } = req.params;

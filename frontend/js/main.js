@@ -15,7 +15,8 @@ async function loadNotes() {
     showLoading();
 
     notes = await getNotes();
-    console.log("Notes fetched:", notes);
+    const message = document.getElementById("message");
+    if (message) message.textContent = "";
 
     // Pass reload function so UI can refresh after delete
     renderNotes(notes, loadNotes);
@@ -25,7 +26,6 @@ async function loadNotes() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initial load
   loadNotes();
 
   // Open Create Note dialog
@@ -34,6 +34,5 @@ document.addEventListener("DOMContentLoaded", () => {
     newBtn.addEventListener("click", openCreateDialog);
   }
 
-  // Handle create form submit
   setupCreateHandler(loadNotes);
 });

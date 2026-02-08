@@ -75,12 +75,10 @@ body {
   z-index: 1000;
 }
 
-/* Hide utility */
 .hidden {
   display: none;
 }
 
-/* Modal box */
 .modal-content {
   background: white;
   padding: 24px;
@@ -90,7 +88,6 @@ body {
   text-align: center;
 }
 
-/* Buttons */
 .modal-actions {
   display: flex;
   justify-content: space-between;
@@ -156,14 +153,12 @@ dialog::backdrop {
   border-bottom: solid lightgray 2px;
 }
 
-/* Form layout */
 .form-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Labels */
 .form-content label {
   font-size: 14px;
   font-weight: 600;
@@ -171,7 +166,6 @@ dialog::backdrop {
   margin-bottom: 4px;
 }
 
-/* Inputs + textarea */
 .form-content input,
 .form-content textarea {
   width: 100%;
@@ -185,21 +179,18 @@ dialog::backdrop {
   font-family: inherit;
 }
 
-/* Focus state */
 .form-content input:focus,
 .form-content textarea:focus {
-  border-color: #2563eb; /* blue focus */
+  border-color: #2563eb;
   background: #fff;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* Textarea specific */
 .form-content textarea {
   min-height: 120px;
   resize: vertical;
 }
 
-/* Placeholder styling */
 .form-content input::placeholder,
 .form-content textarea::placeholder {
   color: #9ca3af;
